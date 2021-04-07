@@ -1,21 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PetsList from './PetsList'
 
 export default function Friend(props) {
   // 👉 1- What does a Friend need?
+  const {friendDetail, changeMarriedStatus} = props;
+  const [petList, setPetList] = useState(friendDetail.pets);
 
   return (
     <div className='friend-friends container'>
       {/* 👉 2- Fix the JSX so it displays real info coming into the component */}
       <div className='friend-info'>
         <div >
-          <h3>Name: Jessica</h3>
-          <p>Age: 26</p>
+          <h3>Name: {friendDetail.name}</h3>
+          <p>Age: {friendDetail.age}</p>
 
-          <p>Married: yes <button>change</button></p>
+          <p>Married: {friendDetail.married ? " True": " False" }
+          <br/>
+          <button onClick={event => changeMarriedStatus(friendDetail.id)}>change</button></p>
           <div>Likes:
             <ul>
               {/* 👉 3- Loop over the friend's hobbies and generate <li/> elements as you go */}
+              {
+                friendDetail.hobbies.map((item) => {
+                  return(
+                    <li key={item}>{item}</li>
+                  )
+                })
+              }
             </ul>
           </div>
         </div>
@@ -24,7 +35,7 @@ export default function Friend(props) {
           {/* 👉 3- What data does the PetsList need? */}
           {/* What is the exact name of the prop/props it expects? */}
           {/* Is the data around here somewhere so I may pass it? */}
-          <PetsList />
+          <PetsList pets={petList}/>
         </div>
       </div>
     </div>
